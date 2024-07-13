@@ -7,10 +7,13 @@ import scipy.linalg
 import scipy.stats
 import json
 
+
 class KeyPredictor:
     def __init__(self, filepath):
-        self.major_profile = np.array([6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88])
-        self.minor_profile = np.array([6.33, 2.68, 3.52, 5.38, 2.60, 3.53, 2.54, 4.75, 3.98, 2.69, 3.34, 3.17])
+        self.major_profile = np.array(
+            [6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88])
+        self.minor_profile = np.array(
+            [6.33, 2.68, 3.52, 5.38, 2.60, 3.53, 2.54, 4.75, 3.98, 2.69, 3.34, 3.17])
         self.y, self.sr = librosa.load(filepath)
 
     # Applies a Butterworth lowpass filter to a signal
@@ -22,7 +25,7 @@ class KeyPredictor:
 
     def get_chromagram(self):
         return librosa.feature.chroma_stft(y=self.y, sr=self.sr)
-         
+
     def visualise_pitch_class_distribution(self, pitch_class_distribution, pitch_classes):
         plt.bar(pitch_classes, pitch_class_distribution)
         plt.title('Pitch Class Distribution')
@@ -32,23 +35,27 @@ class KeyPredictor:
 
     def predict_key(self, pitch_class_distribution):
         zscored = scipy.stats.zscore(pitch_class_distribution)
-        majors = scipy.linalg.circulant(scipy.stats.zscore(self.major_profile)).T
-        minors = scipy.linalg.circulant(scipy.stats.zscore(self.minor_profile)).T
+        majors = scipy.linalg.circulant(
+            scipy.stats.zscore(self.major_profile)).T
+        minors = scipy.linalg.circulant(
+            scipy.stats.zscore(self.minor_profile)).T
         # Cross product of z-scores = correlation function
         major_similarity = majors.dot(zscored)
         minor_similarity = minors.dot(zscored)
         # Returns the most likely major and minor key, and their respective similarities
         return np.argmax(major_similarity), np.max(major_similarity), np.argmax(minor_similarity), np.max(minor_similarity)
-    
+
     def run_prediction(self):
-        #self.y = self.butter_lowpass_filter(1400, self.y, 4)
+        # self.y = self.butter_lowpass_filter(1400, self.y, 4)
         chromagram_filtered = self.get_chromagram()
         pitch_class_distribution = np.sum(chromagram_filtered, axis=1)
         # Normalises the distribution
         pitch_class_distribution /= np.max(pitch_class_distribution)
-        pitch_classes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-        #self.plot_pitch_class_distribution(pitch_class_distribution, pitch_classes)
-        major_key, major_similarity, minor_key, minor_similarity = self.predict_key(pitch_class_distribution)
+        pitch_classes = ['C', 'C#', 'D', 'D#', 'E',
+                         'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+        # self.plot_pitch_class_distribution(pitch_class_distribution, pitch_classes)
+        major_key, major_similarity, minor_key, minor_similarity = self.predict_key(
+            pitch_class_distribution)
 
         if major_similarity > minor_similarity:
             key = pitch_classes[major_key] + " Maj"
@@ -61,11 +68,13 @@ class KeyPredictor:
         confidence = (similarity/12)*100
         return key, confidence
 
-def run_test(title, real_key):
-    root = "D:\\University\\Year 3\\Individual Project\\Data\\Key Data\\"
+
+def run_test(title, gt_key):
+    root = ""
     predictor = KeyPredictor(root + title)
     key, similarity = predictor.run_prediction()
-    return key == real_key
+    return key == gt_key
+
 
 def run_tests(test_data):
     correct = 0
@@ -77,8 +86,9 @@ def run_tests(test_data):
             wrong.append(title)
     return (correct/len(test_data.items())) * 100, wrong
 
+
 def test_all():
-    root = "D:\\University\\Year 3\\Individual Project\\Data\\Key Data\\"
+    root = ""
     with open(root + "test_data.json", "r") as f:
         test_data = json.load(f)
 
@@ -86,4 +96,3 @@ def test_all():
     wrong = ', '.join(wrong)
     print("First match accuracy testing.")
     print(f'Accuracy: {round(accuracy)}%\nIncorrect classifications: {wrong}')
-
