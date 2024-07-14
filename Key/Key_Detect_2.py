@@ -46,7 +46,7 @@ class KeyPredictor:
         return np.argmax(major_similarity), np.max(major_similarity), np.argmax(minor_similarity), np.max(minor_similarity)
 
     def run_prediction(self):
-        # self.y = self.butter_lowpass_filter(1400, self.y, 4)
+        self.y = self.butter_lowpass_filter(1400, self.y, 4)
         chromagram_filtered = self.get_chromagram()
         pitch_class_distribution = np.sum(chromagram_filtered, axis=1)
         # Normalises the distribution
