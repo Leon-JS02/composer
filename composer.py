@@ -1,3 +1,5 @@
+"""The main shell of the Composer app."""
+
 import argparse
 import os
 import sys
@@ -6,20 +8,29 @@ from Beat.TempoEstimator import TempoEstimator
 from Key.KeyAnalyst import KeyAnalyst
 from Library.LibraryHandler import LibraryHandler
 
+
 class ANSI:
+    """Class used for styling."""
     GREEN = '\033[92m'
     YELLOW = '\033[33m'
     RED = '\033[31m'
     END = '\033[0m'
 
+
 def display_files(files):
-    file_df = DataFrame([file.split('.') for file in files], columns=["Filename", "Extension"])
+    """Displays all files in the library."""
+    file_df = DataFrame([file.split('.')
+                        for file in files], columns=["Filename", "Extension"])
     print(file_df)
 
+
 def validate(filename: str, handler: LibraryHandler) -> bool:
+    """Returns true if a file exists and is of the right type."""
     return handler.exists_in_library(filename) and handler.validate_file_type(filename)
 
+
 def display_help():
+    """Overwriting the default help function provided by Argparse."""
     print("="*50)
     print("Composer: A Musical Analysis Tool")
     print("="*50)
@@ -33,12 +44,15 @@ def display_help():
     print("-h/--help                      Display this help message.")
     print("="*50)
 
+
 def main():
+    """Main function."""
     library_handler = LibraryHandler()
     tempo_estimator = TempoEstimator()
     key_analyst = KeyAnalyst()
-    parser = argparse.ArgumentParser(description="Composer - A musical analysis tool.", add_help=False)
-    parser.add_argument("-h","--help", action="store_true")
+    parser = argparse.ArgumentParser(description="Composer - A musical analysis tool.",
+                                     add_help=False)
+    parser.add_argument("-h", "--help", action="store_true")
     parser.add_argument("-k", "--key", type=str, metavar="filename")
     parser.add_argument("-t", "--tempo", type=str, metavar="filename")
     parser.add_argument("-l", "--list", action="store_true")
@@ -58,7 +72,7 @@ def main():
     if args.add:
         status = library_handler.add_to_library(args.add)
         if not status:
-            print(f'Error adding file to library.', file=sys.stderr)
+            print('Error adding file to library.', file=sys.stderr)
         else:
             filename = os.path.basename(args.add)
             print(f'Successfully added {filename} to library')
@@ -66,7 +80,7 @@ def main():
     if args.delete:
         status = library_handler.delete_from_library(args.delete)
         if not status:
-            print(f'Error removing file from library.', file=sys.stderr)
+            print('Error removing file from library.', file=sys.stderr)
         else:
             print(f'Successfully removed {args.delete} from library.')
 
@@ -87,7 +101,8 @@ def main():
         print("Estimating key...")
         key, confidence = key_analyst.predict_key(path)
         print(f'Key signature: {key}')
-        print(ANSI.RED if confidence < 33 else (ANSI.YELLOW if confidence < 66 else ANSI.GREEN),end="")
+        print(ANSI.RED if confidence < 33 else (
+            ANSI.YELLOW if confidence < 66 else ANSI.GREEN), end="")
         print(f'Confidence: {round(confidence)}%{ANSI.END}')
 
     if args.set:
@@ -96,6 +111,7 @@ def main():
             print("Error setting library path.", file=sys.stderr)
         else:
             print(f'Successfully placed library at {args.set}')
+
 
 if __name__ == "__main__":
     main()
