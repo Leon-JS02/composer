@@ -9,6 +9,8 @@ import json
 
 
 class KeyPredictor:
+    """Class to predict the key of a given audio file."""
+
     def __init__(self, filepath):
         self.major_profile = np.array(
             [6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88])
@@ -16,17 +18,19 @@ class KeyPredictor:
             [6.33, 2.68, 3.52, 5.38, 2.60, 3.53, 2.54, 4.75, 3.98, 2.69, 3.34, 3.17])
         self.y, self.sr = librosa.load(filepath)
 
-    # Applies a Butterworth lowpass filter to a signal
     def butter_lowpass_filter(self, cutoff, data, order):
+        """Applies a Butterworth lowpass filter to a signal"""
         nyquist = self.sr * 0.5
         cutoff_normalised = cutoff / nyquist
         b, a = butter(order, cutoff_normalised, btype='low', analog=False)
         return filtfilt(b, a, data)
 
     def get_chromagram(self):
+        """Returns a signal's chromagraph."""
         return librosa.feature.chroma_stft(y=self.y, sr=self.sr)
 
     def visualise_pitch_class_distribution(self, pitch_class_distribution, pitch_classes):
+        """Uses matplotlib to visualise an audio file's PCD."""
         plt.bar(pitch_classes, pitch_class_distribution)
         plt.title('Pitch Class Distribution')
         plt.xlabel('Pitch Class')
@@ -34,6 +38,7 @@ class KeyPredictor:
         plt.show()
 
     def predict_key(self, pitch_class_distribution):
+        """Performs the key prediction of a pitch class distribution."""
         zscored = scipy.stats.zscore(pitch_class_distribution)
         majors = scipy.linalg.circulant(
             scipy.stats.zscore(self.major_profile)).T
@@ -46,6 +51,7 @@ class KeyPredictor:
         return np.argmax(major_similarity), np.max(major_similarity), np.argmax(minor_similarity), np.max(minor_similarity)
 
     def run_prediction(self):
+        """Runs a key prediction of the assigned signal."""
         self.y = self.butter_lowpass_filter(1400, self.y, 4)
         chromagram_filtered = self.get_chromagram()
         pitch_class_distribution = np.sum(chromagram_filtered, axis=1)
@@ -72,7 +78,7 @@ class KeyPredictor:
 def run_test(title, gt_key):
     root = ""
     predictor = KeyPredictor(root + title)
-    key, similarity = predictor.run_prediction()
+    key, _ = predictor.run_prediction()
     return key == gt_key
 
 
