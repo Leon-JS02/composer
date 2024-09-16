@@ -2,17 +2,16 @@
 
 Composer is a command-line tool for musical analysis and operations on audio files. It supports key signature classification, tempo estimation, and more.
 
-**Dependencies/Requirements**
+**Dependencies
 
-- **Python**: 3.12.2
-- **Librosa**: v0.10.1
-- **SciPy**: v1.12.0
-- **NumPy**: v1.26.4
-- **Pandas**: v2.2.1
-- **Matplotlib**: v3.8.3
-- **Soundfile**: v0.12.1
+- **Librosa**
+- **SciPy**
+- **NumPy**
+- **Pandas**
+- **Matplotlib**
+- **Soundfile**
 
-**Note:** Ensure to set the audio library path using the `-s/--set` command before using Composer. The recommended path relative to the project's root is `Library/Audio`.
+## **Note:** Ensure to set the audio library path using the `-s/--set` command before using Composer. The recommended path relative to the project's root is `Library/Audio`.
 
 Example usage:
 
