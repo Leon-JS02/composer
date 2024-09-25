@@ -17,8 +17,9 @@ class OnsetDetector:
        plt.title('Spectral Novelty Function with Onsets')
        plt.show()
 
-    """Uses Gaussian smoothing and adaptive local thresholding to find peaks in a signal"""
     def peak_pick(self, x, median_len=16, offset_rel=0.05, sigma=4.0):
+        """Uses Gaussian smoothing and adaptive local thresholding 
+        to find peaks in a signal"""
         offset = x.mean() * offset_rel
         x = filters.gaussian_filter1d(x, sigma=sigma)
         threshold_local = filters.median_filter(x, size=median_len) + offset
@@ -31,8 +32,8 @@ class OnsetDetector:
         return peaks
 
 
-    """Detects onsets as peaks in a spectral novelty function, logarithmically compressed by gamma"""
     def detect_spectral_onsets(self, sig, sr, gamma=100):
+        """Detects onsets as peaks in a spectral novelty function, logarithmically compressed by gamma"""
         sig = np.asarray(sig)
         window_size = 1024
         hop_length = 512
@@ -51,11 +52,8 @@ class OnsetDetector:
         #self.plot_peaks(novelty_fun, time, onsets)
         return onsets, time
 
-    def detect_energy_onsets(self, sig):
-        return []
-
-    """Takes a list of seconds in which onsets occur, creates a click track"""
     def produce_click_track(self, onsets, sr=22050, freq=800):
+        """Takes a list of seconds in which onsets occur, creates a click track"""
         onset_samples = [round(x * sr) for x in onsets]
         click_duration = int(0.1 * sr)  
         click_track = np.zeros(onset_samples[-1] + click_duration)
