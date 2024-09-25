@@ -7,8 +7,8 @@ class TempoEstimator:
         self.onset_detector = OnsetDetector()
         self.estimator = Estimator()
         
-    """Predicts BPM in two stages: Onset detection, and estimation"""
     def predict_bpm(self, file_path):
+        """Predicts BPM in two stages: Onset detection, and estimation"""
         y, sr = librosa.load(file_path)
         onsets, time = self.onset_detector.detect_spectral_onsets(y, sr, gamma=100)
         onset_times = time[onsets]
