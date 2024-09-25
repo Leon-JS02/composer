@@ -1,3 +1,5 @@
+import json
+
 import librosa
 import librosa.display
 import matplotlib.pyplot as plt
@@ -5,7 +7,7 @@ from scipy.signal import butter, filtfilt
 import numpy as np
 import scipy.linalg
 import scipy.stats
-import json
+
 
 
 class KeyPredictor:
