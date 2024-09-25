@@ -1,4 +1,5 @@
 import librosa
+
 from Beat.OnsetDetector import OnsetDetector
 from Beat.Estimator import Estimator
 
