@@ -3,7 +3,9 @@
 import argparse
 import os
 import sys
+
 from pandas import DataFrame
+
 from Beat.TempoEstimator import TempoEstimator
 from Key.KeyAnalyst import KeyAnalyst
 from Library.LibraryHandler import LibraryHandler
