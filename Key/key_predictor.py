@@ -9,7 +9,6 @@ import scipy.linalg
 import scipy.stats
 
 
-
 class KeyPredictor:
     """Class to predict the key of a given audio file."""
 
@@ -50,7 +49,8 @@ class KeyPredictor:
         major_similarity = majors.dot(zscored)
         minor_similarity = minors.dot(zscored)
         # Returns the most likely major and minor key, and their respective similarities
-        return np.argmax(major_similarity), np.max(major_similarity), np.argmax(minor_similarity), np.max(minor_similarity)
+        return (np.argmax(major_similarity), np.max(major_similarity),
+                np.argmax(minor_similarity), np.max(minor_similarity))
 
     def run_prediction(self):
         """Runs a key prediction of the assigned signal."""
@@ -72,7 +72,7 @@ class KeyPredictor:
             key = pitch_classes[minor_key] + " Min"
             similarity = minor_similarity
 
-        # Returns the key (tonality and mode) and its similarity a 'confidence' rating as a percentage
+        # Returns the key and its similarity a 'confidence' rating as a percentage
         confidence = (similarity/12)*100
         return key, confidence
 

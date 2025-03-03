@@ -6,8 +6,8 @@ import sys
 
 from pandas import DataFrame
 
-from Beat.TempoEstimator import TempoEstimator
-from Key.KeyAnalyst import KeyAnalyst
+from Beat.tempo_estimator import TempoEstimator
+from Key.key_analyst import KeyAnalyst
 from Library.library_handler import LibraryHandler
 
 

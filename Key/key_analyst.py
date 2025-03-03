@@ -1,4 +1,5 @@
-from Key.Key_Detect_2 import KeyPredictor
+from Key.key_predictor import KeyPredictor
+
 
 class KeyAnalyst:
     def predict_key(self, file_path):
