@@ -1,4 +1,4 @@
-### Composer v1.0.1
+### Composer v1.0.2
 
 Composer is a command-line tool for musical analysis and operations on audio files. It supports key signature classification, tempo estimation, and more.
 
