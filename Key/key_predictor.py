@@ -1,4 +1,5 @@
-import json
+"""Key Predictor module. Main logic for predicting the musical key of a piece."""
+# import json
 
 import librosa
 import librosa.display
@@ -77,30 +78,31 @@ class KeyPredictor:
         return key, confidence
 
 
-def run_test(title, gt_key):
-    root = ""
-    predictor = KeyPredictor(root + title)
-    key, _ = predictor.run_prediction()
-    return key == gt_key
+# Testing utils.
+# def run_test(title, gt_key):
+#     root = ""
+#     predictor = KeyPredictor(root + title)
+#     key, _ = predictor.run_prediction()
+#     return key == gt_key
 
 
-def run_tests(test_data):
-    correct = 0
-    wrong = []
-    for title, key in test_data.items():
-        if run_test(title, key):
-            correct += 1
-        else:
-            wrong.append(title)
-    return (correct/len(test_data.items())) * 100, wrong
+# def run_tests(test_data):
+#     correct = 0
+#     wrong = []
+#     for title, key in test_data.items():
+#         if run_test(title, key):
+#             correct += 1
+#         else:
+#             wrong.append(title)
+#     return (correct/len(test_data.items())) * 100, wrong
 
 
-def test_all():
-    root = ""
-    with open(root + "test_data.json", "r") as f:
-        test_data = json.load(f)
+# def test_all():
+#     root = ""
+#     with open(root + "test_data.json", "r") as f:
+#         test_data = json.load(f)
 
-    accuracy, wrong = run_tests(test_data)
-    wrong = ', '.join(wrong)
-    print("First match accuracy testing.")
-    print(f'Accuracy: {round(accuracy)}%\nIncorrect classifications: {wrong}')
+#     accuracy, wrong = run_tests(test_data)
+#     wrong = ', '.join(wrong)
+#     print("First match accuracy testing.")
+#     print(f'Accuracy: {round(accuracy)}%\nIncorrect classifications: {wrong}')
