@@ -11,6 +11,10 @@ YYYY-MM-DD: HHMM - Message describing first change made
 Composer v1.0.2
 - Minor tweaks to general code quality.
 ==================== CHANGES MADE ====================
+2025-03-03: 1446 - Linted Beat module
+2025-03-03: 1443 - Removed empty constructor in onset_detector.py
+2025-03-03: 1442 - Renamed all Beat modules to conform to snake_case
+2025-03-03: 1439 - Variable name changes in estimator.py to conform to snake_case
 2025-03-03: 1431 - Renamed `LibraryHandler` module to conform to snake_case
 2025-03-03: 1429 - Added docstrings and type hints to `LibraryHandler.py`
 2025-03-03: 1427 - Removed hardcoded string from library handler path
