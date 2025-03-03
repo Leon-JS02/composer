@@ -8,7 +8,7 @@ from pandas import DataFrame
 
 from Beat.TempoEstimator import TempoEstimator
 from Key.KeyAnalyst import KeyAnalyst
-from Library.LibraryHandler import LibraryHandler
+from Library.library_handler import LibraryHandler
 
 
 class ANSI:

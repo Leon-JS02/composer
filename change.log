@@ -1,0 +1,20 @@
+Changes should be of the following structure:
+
+Composer <Semantic Version Number>
+- Brief description of update
+==================== CHANGES MADE ====================
+YYYY-MM-DD: HHMM - Message describing last change made
+YYYY-MM-DD: HHMM - Message describing first change made
+
+
+
+Composer v1.0.2
+- Minor tweaks to general code quality.
+==================== CHANGES MADE ====================
+2025-03-03: 1431 - Renamed `LibraryHandler` module to conform to snake_case
+2025-03-03: 1429 - Added docstrings and type hints to `LibraryHandler.py`
+2025-03-03: 1427 - Removed hardcoded string from library handler path
+2025-03-03: 1424 - Added indentation to library config JSON dump
+2025-03-03: 1413 - Created change.log file
+2025-03-03: 1410 - Added different audio file extensions to .gitignore
+2025-03-03: 1325 - Updated requirements.txt to include libraries no longer in Python stdlib

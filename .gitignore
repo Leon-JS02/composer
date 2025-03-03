@@ -2,7 +2,8 @@
 venv
 .venv
 __pycache__
-Library/
+Library/Audio
+*.json
 *.env
 *.wav
 *.mp3
