@@ -1,5 +1,11 @@
 .DS_Store
 venv
-*.env
+.venv
 __pycache__
 Library/
+*.env
+*.wav
+*.mp3
+*.ogg
+*.flag
+*.m4a
